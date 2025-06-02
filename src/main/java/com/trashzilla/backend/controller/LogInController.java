@@ -18,7 +18,7 @@ public class LogInController {
         this.repository = repository;
     }
 
-    @CrossOrigin(origins = "http://127.0.0.1:3000")
+    @CrossOrigin(origins = {"http://127.0.0.1:5500"})
     @PostMapping
     public ResponseEntity<Map<String, Object>> login(@RequestBody LogIn login) {
         Optional<User> user = repository.findByEmailAndPassword(
