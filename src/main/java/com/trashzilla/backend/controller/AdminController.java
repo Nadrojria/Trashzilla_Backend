@@ -25,6 +25,7 @@ public class AdminController {
 
         for (User user : users) {
             userInfoList.add(new Admin(
+                    user.getId(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getCity() != null ? user.getCity().getName() : null
@@ -35,13 +36,16 @@ public class AdminController {
     }
 
     @DeleteMapping("/user/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable("id") Long id) {
         if (!repository.existsById(id)) {
-            return "Delete not OK";
+            return ResponseEntity.status(401).body(Map.of("success", false));
         }
 
         repository.deleteById(id);
-        return "Delete OK";
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        return ResponseEntity.ok(response);
     }
 }
 
