@@ -5,6 +5,7 @@ public class Admin {
     private String firstName;
     private String lastName;
     private String city;
+    private String role;
 
     public Admin(Long id, String firstName, String lastName, String city) {
         this.id = id;
@@ -26,5 +27,12 @@ public class Admin {
 
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
 
