@@ -1,6 +1,7 @@
 package com.trashzilla.backend.controller;
 
-import com.trashzilla.backend.dto.Admin;
+import com.trashzilla.backend.dto.AdminListUsers;
+import com.trashzilla.backend.dto.AdminModifyUser;
 import com.trashzilla.backend.entity.City;
 import com.trashzilla.backend.entity.User;
 import com.trashzilla.backend.repository.CityRepository;
@@ -23,12 +24,12 @@ public class AdminController {
     }
 
     @GetMapping("/users-info")
-    public ResponseEntity<List<Admin>> getUsersBasicInfo() {
+    public ResponseEntity<List<AdminListUsers>> getUsersBasicInfo() {
         List<User> users = repository.findAll();
-        List<Admin> userInfoList = new ArrayList<>();
+        List<AdminListUsers> userInfoList = new ArrayList<>();
 
         for (User user : users) {
-            userInfoList.add(new Admin(
+            userInfoList.add(new AdminListUsers(
                     user.getId(),
                     user.getFirstName(),
                     user.getLastName(),
@@ -42,27 +43,22 @@ public class AdminController {
     @PutMapping("/user/{id}")
     public ResponseEntity<Map<String, Object>> updateUser(
             @PathVariable("id") Long id,
-            @RequestBody Map<String, Object> updates
-    ) {
+            @RequestBody AdminModifyUser updatedUser) {
         Optional<User> optionalUser = repository.findById(id);
+
         if (optionalUser.isEmpty()) {
-            return ResponseEntity.status(404).body(Map.of("success", false, "message", "User not found"));
+            return ResponseEntity.notFound().build();
         }
 
         User existingUser = optionalUser.get();
+        if (updatedUser.getFirstName() != null) existingUser.setFirstName(updatedUser.getFirstName());
+        if (updatedUser.getLastName() != null) existingUser.setLastName(updatedUser.getLastName());
+        if (updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
+        if (updatedUser.getPassword() != null) existingUser.setPassword(updatedUser.getPassword());
+        if (updatedUser.getRole() != null) existingUser.setRole(updatedUser.getRole());
 
-        if (updates.containsKey("firstName")) {
-            existingUser.setFirstName((String) updates.get("firstName"));
-        }
-        if (updates.containsKey("lastName")) {
-            existingUser.setLastName((String) updates.get("lastName"));
-        }
-        if (updates.containsKey("role")) {
-            existingUser.setRole((String) updates.get("role"));
-        }
-        if (updates.containsKey("city")) {
-            String cityName = (String) updates.get("city");
-            City city = cityRepository.findByName(cityName);
+        if (updatedUser.getCity() != null) {
+            City city = cityRepository.findByName(updatedUser.getCity());
             if (city == null) {
                 return ResponseEntity.badRequest().body(Map.of("success", false, "message", "City not found"));
             }

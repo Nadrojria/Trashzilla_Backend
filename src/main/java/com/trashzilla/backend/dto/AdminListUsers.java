@@ -1,13 +1,12 @@
 package com.trashzilla.backend.dto;
 
-public class Admin {
+public class AdminListUsers {
     private final Long id;
     private String firstName;
     private String lastName;
     private String city;
-    private String role;
 
-    public Admin(Long id, String firstName, String lastName, String city) {
+    public AdminListUsers(Long id, String firstName, String lastName, String city) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,12 +26,5 @@ public class Admin {
 
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
-
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
 
