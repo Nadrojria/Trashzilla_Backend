@@ -283,3 +283,13 @@ GRANT ALL ON DATABASE db_trashzilla TO admin;
 -- PostgreSQL database dump complete
 --
 
+--
+-- MANUAL DATA PATCHES (AFTER IMPORT)
+--
+
+UPDATE public.users SET city_id = 1 WHERE id = 1;
+UPDATE public.users SET city_id = 2 WHERE id = 2;
+UPDATE public.users SET city_id = 3 WHERE id = 3;
+UPDATE public.users SET city_id = 3 WHERE id = 4;
+UPDATE public.users SET city_id = 4 WHERE id = 5;
+UPDATE public.users SET city_id = 5 WHERE id = 6;
