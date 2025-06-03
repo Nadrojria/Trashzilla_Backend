@@ -33,6 +33,16 @@ public class AdminController {
 
         return ResponseEntity.ok(userInfoList);
     }
+
+    @DeleteMapping("/user/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        if (!repository.existsById(id)) {
+            return "Delete not OK";
+        }
+
+        repository.deleteById(id);
+        return "Delete OK";
+    }
 }
 
 
