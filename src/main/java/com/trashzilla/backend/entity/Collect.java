@@ -1,6 +1,8 @@
 package com.trashzilla.backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class Collect {
     @JoinColumn(name="user_id")
     private List<User> user;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

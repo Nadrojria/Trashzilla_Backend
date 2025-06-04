@@ -40,6 +40,27 @@ public class AdminController {
         return ResponseEntity.ok(userInfoList);
     }
 
+    @PostMapping("/user")
+    public ResponseEntity<Map<String, Object>> createUser(@RequestBody UserDTO newUser) {
+        City city = cityRepository.findByName(newUser.getCity());
+        if (city == null) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "City not found"));
+        }
+
+        User user = new User();
+        user.setFirstName(newUser.getFirstName());
+        user.setLastName(newUser.getLastName());
+        user.setEmail(newUser.getEmail());
+        user.setPassword(newUser.getPassword());
+        user.setRole(newUser.getRole());
+        user.setCity(city);
+
+        repository.save(user);
+
+        return ResponseEntity.ok(Map.of("success", true, "message", "User created"));
+    }
+
+
     @PutMapping("/user/{id}")
     public ResponseEntity<Map<String, Object>> updateUser(
             @PathVariable("id") Long id,
@@ -83,8 +104,6 @@ public class AdminController {
         repository.save(existingUser);
         return ResponseEntity.ok(Map.of("success", true));
     }
-
-
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable("id") Long id) {

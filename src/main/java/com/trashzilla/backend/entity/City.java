@@ -1,6 +1,8 @@
 package com.trashzilla.backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,6 +21,7 @@ public class City {
     @Column(name = "lng")
     private Float lng;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
