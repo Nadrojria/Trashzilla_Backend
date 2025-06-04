@@ -1,17 +1,23 @@
-package com.trashzilla.backend.dto;
+package com.trashzilla.backend.DTO;
 
-public class Admin {
+public class UserIdentityDTO {
+    private final Long id;
     private String firstName;
     private String lastName;
     private String city;
 
-    public Admin(String firstName, String lastName, String city) {
+    public UserIdentityDTO(Long id, String firstName, String lastName, String city) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
     }
 
     // Getters and setters
+    public Long getId() {
+        return this.id;
+    }
+
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
 

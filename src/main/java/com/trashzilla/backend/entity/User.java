@@ -1,6 +1,8 @@
 package com.trashzilla.backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,6 +32,7 @@ public class User {
     @JoinColumn(name="city_id")
     private City city;
 
+    @CreationTimestamp
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
@@ -37,7 +40,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     // Constructor
-    private User() {}
+    public User() {}
     public User(String firstName, String lastName, String email, String password, String role, City city, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.firstName = firstName;
         this.lastName = lastName;
