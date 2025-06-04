@@ -37,7 +37,6 @@ public class LogInController {
             return ResponseEntity.status(401).body(Map.of("success", false));
         }
     }
-
 }
 
 
