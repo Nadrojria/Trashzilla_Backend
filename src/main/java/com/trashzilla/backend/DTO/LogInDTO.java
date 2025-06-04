@@ -1,6 +1,6 @@
-package com.trashzilla.backend.dto;
+package com.trashzilla.backend.DTO;
 
-public class LogIn {
+public class LogInDTO {
     private String email;
     private String password;
 

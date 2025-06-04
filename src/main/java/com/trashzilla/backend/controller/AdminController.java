@@ -1,7 +1,7 @@
 package com.trashzilla.backend.controller;
 
-import com.trashzilla.backend.dto.AdminListUsers;
-import com.trashzilla.backend.dto.AdminModifyUser;
+import com.trashzilla.backend.DTO.UserIdentityDTO;
+import com.trashzilla.backend.DTO.UserDTO;
 import com.trashzilla.backend.entity.City;
 import com.trashzilla.backend.entity.User;
 import com.trashzilla.backend.repository.CityRepository;
@@ -23,13 +23,13 @@ public class AdminController {
         this.cityRepository = cityRepository;
     }
 
-    @GetMapping("/users-info")
-    public ResponseEntity<List<AdminListUsers>> getUsersBasicInfo() {
+    @GetMapping("/user")
+    public ResponseEntity<List<UserIdentityDTO>> getUsersBasicInfo() {
         List<User> users = repository.findAll();
-        List<AdminListUsers> userInfoList = new ArrayList<>();
+        List<UserIdentityDTO> userInfoList = new ArrayList<>();
 
         for (User user : users) {
-            userInfoList.add(new AdminListUsers(
+            userInfoList.add(new UserIdentityDTO(
                     user.getId(),
                     user.getFirstName(),
                     user.getLastName(),
@@ -43,7 +43,7 @@ public class AdminController {
     @PutMapping("/user/{id}")
     public ResponseEntity<Map<String, Object>> updateUser(
             @PathVariable("id") Long id,
-            @RequestBody AdminModifyUser updatedUser) {
+            @RequestBody UserDTO updatedUser) {
         Optional<User> optionalUser = repository.findById(id);
 
         if (optionalUser.isEmpty()) {
@@ -51,13 +51,28 @@ public class AdminController {
         }
 
         User existingUser = optionalUser.get();
-        if (updatedUser.getFirstName() != null) existingUser.setFirstName(updatedUser.getFirstName());
-        if (updatedUser.getLastName() != null) existingUser.setLastName(updatedUser.getLastName());
-        if (updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
-        if (updatedUser.getPassword() != null) existingUser.setPassword(updatedUser.getPassword());
-        if (updatedUser.getRole() != null) existingUser.setRole(updatedUser.getRole());
 
-        if (updatedUser.getCity() != null) {
+        if (updatedUser.getFirstName() != null && !updatedUser.getFirstName().isBlank()) {
+            existingUser.setFirstName(updatedUser.getFirstName());
+        }
+
+        if (updatedUser.getLastName() != null && !updatedUser.getLastName().isBlank()) {
+            existingUser.setLastName(updatedUser.getLastName());
+        }
+
+        if (updatedUser.getEmail() != null && !updatedUser.getEmail().isBlank()) {
+            existingUser.setEmail(updatedUser.getEmail());
+        }
+
+        if (updatedUser.getPassword() != null && !updatedUser.getPassword().isBlank()) {
+            existingUser.setPassword(updatedUser.getPassword());
+        }
+
+        if (updatedUser.getRole() != null && !updatedUser.getRole().isBlank()) {
+            existingUser.setRole(updatedUser.getRole());
+        }
+
+        if (updatedUser.getCity() != null && !updatedUser.getCity().isBlank()) {
             City city = cityRepository.findByName(updatedUser.getCity());
             if (city == null) {
                 return ResponseEntity.badRequest().body(Map.of("success", false, "message", "City not found"));
@@ -68,6 +83,7 @@ public class AdminController {
         repository.save(existingUser);
         return ResponseEntity.ok(Map.of("success", true));
     }
+
 
 
     @DeleteMapping("/user/{id}")

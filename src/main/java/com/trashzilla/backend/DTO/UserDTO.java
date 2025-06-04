@@ -1,6 +1,6 @@
-package com.trashzilla.backend.dto;
+package com.trashzilla.backend.DTO;
 
-public class AdminModifyUser {
+public class UserDTO {
     private String firstName;
     private String lastName;
     private String city;
