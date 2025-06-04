@@ -25,12 +25,12 @@ public class LogInController {
                 login.getEmail(), login.getPassword());
 
         if (user.isPresent()) {
-            User u = user.get();
+            User loggedUser = user.get();
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("firstName", u.getFirstName());
-            response.put("role", u.getRole());
+            response.put("firstName", loggedUser.getFirstName());
+            response.put("role", loggedUser.getRole());
 
             return ResponseEntity.ok(response);
         } else {
