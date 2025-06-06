@@ -21,3 +21,5 @@ Période : 4eme mois de formation
 | **Connexion à une base de données**    | Utilisation de JPA/Hibernate pour faire des requêtes vers PostgreSQL |
 | **Gestion des requêtes HTTP**          | Utilisation de @PostMapping, @GetMapping, et des objets @RequestBody |
 | **Utilisation de DTOs**                | Séparation données exposées/internes pour sécuriser les retours      |
+
+Lien vers le [Frontend](https://github.com/Nadrojria/PROJET_COLLECTIF_Trashzilla_Frontend)
